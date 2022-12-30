@@ -1,4 +1,5 @@
 from typing import List, Type
+
 class Action:
     def __init__(self, event_type: str, easing: int, start_time: int, end_time: int, params: list) -> None:
         self.event_type = event_type
@@ -90,3 +91,8 @@ class Loop():
     
     def change_offset(self, offset: int):
         self.start_time += offset
+    
+    @property
+    def end_time(self):
+        loop_time = max([action.end_time for action in self.actions])
+        return self.start_time + loop_time * self.loop_count

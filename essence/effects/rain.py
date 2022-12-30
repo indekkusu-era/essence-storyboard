@@ -32,7 +32,7 @@ class Rain:
                     self._transform_position((pos_x[i], SB_HEIGHT))
                 )
             ]
-            list_objects[i].add_action(Loop(start, (end - start) // prds[i], loop_action))
+            list_objects[i].add_action(Loop(start, int((end - start) // prds[i]), loop_action))
         return list_objects
 
     def thisisfineh(self):

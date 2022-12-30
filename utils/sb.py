@@ -1,5 +1,5 @@
 from copy import deepcopy as copy
-from .objects import Action, Loop
+from .objects import Action, Loop, Move
 from .objects import Sprite, Position
 
 DEFAULT_PATH = ""
@@ -24,7 +24,9 @@ class StoryBoard:
         self.Objects['foreground'] = foreground_objects
         self.Objects['overlay'] = overlay_objects
     
-    def render(self):
+    def render(self, optimize=False):
+        if optimize:
+            self.optimize()
         text = self.EVENT_TEXT + \
         self.BACKGROUND_TEXT + "".join([i.render(Position.BACKGROUND) for i in self.Objects['background']]) + \
         self.FAILPASS_TEXT + self.FOREGROUND_TEXT + "".join([i.render(Position.FOREGROUND) for i in self.Objects['foreground']]) + \
@@ -46,15 +48,42 @@ class StoryBoard:
     @staticmethod
     def is_action(text):
         return text[0] == " "
+    
+    @staticmethod
+    def _optimize(sprites: list[Sprite]):
+        new_sprite_list = []
+        for i, sprite in enumerate(sprites):
+            new_sprite = copy(sprite)
+            action_starts = [action.start_time for action in sprite.action]
+            action_ends = [action.end_time for action in sprite.action]
+            fname = sprite.filename
+            for j, another_sprite in enumerate(sprites):
+                if i == j or fname != another_sprite.filename:
+                    continue
+                for k, action in enumerate(another_sprite.action):
+                    start_time = action.start_time
+                    end_time = action.end_time
+                    intersect = False
+                    for st, et in zip(action_starts, action_ends):
+                        intersect = (st <= end_time <= et) or (end_time >= et and start_time <= et)
+                        if intersect:
+                            break
+                    if not intersect:
+                        new_sprite.append(action)
+                        sprites[j].action = another_sprite.action[:k] + another_sprite.action[k+1:]
+            new_sprite_list.append(new_sprite)
+        return new_sprite_list
+    
+    def optimize(self):
+        for key in self.Objects.keys():
+            self.Objects[key] = self._optimize(self.Objects[key])        
 
     @staticmethod
     def parse_sprite(sprite_text: str):
         sprite_details = sprite_text.split(",")
-        sprite_type = sprite_details[0]
-        sprite_overlay = sprite_details[1]
         sprite_alignment = sprite_details[2]
         sprite_filename = sprite_details[3][1:-1]
-        return Sprite(sprite_filename)
+        return Sprite(sprite_filename, sprite_alignment)
 
     @staticmethod
     def parse_action(action_text: str):
