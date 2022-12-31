@@ -1,0 +1,251 @@
+[Events]
+//Background and Video events
+//Storyboard Layer 0 (Background)
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,109652,,0.4444444
+ F,0,109652,123110,1
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,101802,,0.4444444
+ F,0,101802,102923,0.7,0.5
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,104045,,0.4444444
+ F,0,104045,105166,0.7
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,106288,,0.4444444
+ F,0,106288,107409,0.9
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,108251,,0.4444444
+ F,0,108251,109092,0,0.7
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,109092,,0.4444444
+ F,0,109092,109652,0.7
+Sprite,Background,Centre,"backgrounds\grey_bg.png",320,240
+ S,0,123110,,0.4444444
+ F,0,123110,132010,1,0
+Sprite,Background,Centre,"backgrounds\colorful_bg.png",320,240
+ S,0,199369,,0.4444444
+ F,0,199369,216192,1
+Sprite,Background,Centre,"backgrounds\colorful_bg.png",320,240
+ S,0,198248,,0.4444444
+ F,0,198248,199369,0,1
+Sprite,Background,Centre,"backgrounds\colorful_bg.png",320,240
+ S,0,216192,,0.4444444
+ F,0,216192,216753,1,0
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,1547,,0.4444444
+ F,0,1547,50777,0.5
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,50777,,0.4444444
+ F,0,50777,59224,0.5,1
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,181425,,0.4444444
+ F,0,181425,182547,0,0.3
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,182547,,0.4444444
+ F,0,182547,1982480,0.3
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,383019,,0.4444444
+ F,0,383019,398079,0,1
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,398079,,0.4444444
+ F,0,398079,415273,1,0.6
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,417066,,0.4444444
+ F,0,417066,420073,0,0.7
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,420987,,0.4444444
+ F,0,420987,425178,0,0.5
+Sprite,Background,Centre,"backgrounds\normal_bg.png",320,240
+ S,0,427201,,0.4444444
+ F,0,427201,430571,0,0.3
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,132080,,0.4444444
+ F,0,132080,163482,1
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,100681,,0.4444444
+ F,0,100681,101802,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,102923,,0.4444444
+ F,0,102923,103134,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,103204,,0.4444444
+ F,0,103204,103975,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,105166,,0.4444444
+ F,0,105166,105237,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,105307,,0.4444444
+ F,0,105307,105517,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,105587,,0.4444444
+ F,0,105587,106218,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,107409,,0.4444444
+ F,0,107409,107480,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,107550,,0.4444444
+ F,0,107550,107585,0.5,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,107620,,0.4444444
+ F,0,107620,107655,0.5,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,107690,,0.4444444
+ F,0,107690,108251,0.7,0
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,123110,,0.4444444
+ F,0,123110,132010,0,1
+Sprite,Background,Centre,"backgrounds\red_bg.png",320,240
+ S,0,163482,,0.4444444
+ F,0,163482,179182,1,0
+Sprite,Background,Centre,"backgrounds\wons_bg.png",320,240
+ S,0,62944,,0.4444444
+ F,0,62944,92712,1
+Sprite,Background,Centre,"backgrounds\wons_bg.png",320,240
+ S,0,59224,,0.4444444
+ F,0,59224,62048,0,0.5
+Sprite,Background,Centre,"backgrounds\wons_bg.png",320,240
+ S,0,92712,,0.4444444
+ F,0,92712,100681,1,0
+Sprite,Background,Centre,"backgrounds\incomplete.png",320,240
+ F,0,217313,374399,1
+Sprite,Background,Centre,"backgrounds\black.png",320,240
+ F,0,216893,217313,1
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,40931,41239,0.7,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,62944,63177,0.7,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,109652,109933,0.7,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,132080,132361,0.7,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,199310,199510,0,0.9
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,199510,200070,0.9,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,235721,236176,0,0.9
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,236176,236289,0.9,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,76898,77828,0,0.7
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,77828,78003,0.7,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,91782,92712,0,0.9
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,92712,94223,0.9,0
+Sprite,Foreground,Centre,"backgrounds\white.png",320,240
+ F,0,109512,109652,0,0.9
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,90851,90910,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,90968,91026,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,91317,91375,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,91433,91491,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,91782,91840,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,91898,91956,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,92247,92305,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,92363,92421,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,76898,77014,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,77072,77189,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,77247,77305,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,77363,77479,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,77537,77654,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,77712,77770,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,129488,129558,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,129628,129838,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,129908,129978,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,130048,130259,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,130329,130399,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,130469,130679,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,130749,130819,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,130889,131100,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,131170,131240,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,131310,131520,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,131590,131660,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,131730,131800,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,131941,132011,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230039,230096,0.4,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230153,230210,0.5,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230266,230323,0.6,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230380,230437,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230494,230551,0.8,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230607,230664,0.9,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230721,230778,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,230835,231005,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231062,231119,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231176,231346,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231403,231460,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231516,231687,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231744,231801,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,231857,232028,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232085,232141,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232198,232369,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232426,232482,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232539,232710,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232766,232823,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,232880,233051,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,233107,233164,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,233221,233391,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,233448,234130,0.7,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,234812,234926,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,235039,235153,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,235266,235380,1,0
+Sprite,Foreground,Centre,"backgrounds\black.png",320,240
+ F,0,235494,235607,1,0
+//Storyboard Layer 4 (Overlay)
+//Storyboard Sound Samples

@@ -69,7 +69,7 @@ class StoryBoard:
                         if intersect:
                             break
                     if not intersect:
-                        new_sprite.append(action)
+                        new_sprite.add_action(action)
                         sprites[j].action = another_sprite.action[:k] + another_sprite.action[k+1:]
             new_sprite_list.append(new_sprite)
         return new_sprite_list
@@ -188,9 +188,9 @@ class StoryBoard:
             for i in range(len(self.Objects[k])):
                 self.Objects[k][i].change_offset(offset)
 
-    def osb(self, osb_fp):
+    def osb(self, osb_fp, optimize=False):
         with open(osb_fp, 'w+') as osb:
-            osb.write(self.render())
+            osb.write(self.render(optimize))
 
 def merge_sb(f1, f2):
     sb1 = StoryBoard().from_osb(f1)

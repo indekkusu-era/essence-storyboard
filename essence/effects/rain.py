@@ -11,14 +11,14 @@ class Rain:
     def _matrix(self):
         sin = -np.sin(self._rain_angle)
         cos = np.cos(self._rain_angle)
-        return np.array([[cos, -sin], [sin, cos]])
+        return np.array([[cos, -sin], [sin, cos]]) * 1.5
     
     def _transform_position(self, pos):
-        return (self._matrix() @ np.array(pos).reshape(-1, 1)).flatten().tolist()
+        return (self._matrix() @ np.array(pos).reshape(-1, 1)).flatten() * SB_WIDTH - np.array([SB_WIDTH / 2, 0])
     
     def randomize_objects(self):
         list_objects = [Sprite(self._fp) for _ in range(self._n_objects)]
-        posx = np.random.uniform(0, SB_WIDTH, self._n_objects)
+        posx = np.random.uniform(-1, 1, self._n_objects)
         periods = np.random.uniform(0, 1500, self._n_objects)
         return list_objects, posx, periods
     
@@ -29,7 +29,7 @@ class Rain:
                 Move(
                     0, 0, prds[i], 
                     self._transform_position((pos_x[i], 0)), 
-                    self._transform_position((pos_x[i], SB_HEIGHT))
+                    self._transform_position((pos_x[i], 1))
                 )
             ]
             list_objects[i].add_action(Loop(start, int((end - start) // prds[i]), loop_action))
