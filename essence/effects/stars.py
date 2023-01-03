@@ -22,7 +22,7 @@ class StarZoom:
         mat = np.array([[1000, 0, 0], [0, 320, 0], [0, 0, 240]])
         pos = (mat @ objs).T
         # i wanna do fancy splines stuff but that is later lol
-        camera_velocity = 500 / (end - start)
+        camera_velocity = 750 / (end - start)
         ms_p = 1000 / 24
         sprites = [self._black_cover(start, end)]
         for star in pos:
@@ -30,17 +30,19 @@ class StarZoom:
             self._camera.position = (0,0,0)
             star_sprite = Sprite(self._star)
             (old_x, old_y), old_size = self._camera.transform(star)
+            old_x *= 150; old_y *= 100
             while t <= end:
                 x_cam, y_cam, z_cam = self._camera.position
                 (x, y), size = self._camera.transform(star)
+                x *= 150; y *= 100
                 if size == 0:
                     (old_x, old_y), old_size = (x, y), size
                     self._camera.position = (x_cam + ms_p * camera_velocity, y_cam, z_cam)
                     t += ms_p
                     continue
-                x += 320; y += 240; size *= camera_velocity * (end - start) / 3
+                size *= camera_velocity * (end - start) / 8
                 star_sprite.add_action(Scale(0, t, t+ms_p, old_size, size))
-                star_sprite.add_action(Move(0, t, t+ms_p, (old_x, old_y), (x, y)))
+                star_sprite.add_action(Move(0, t, t+ms_p, (old_x + 320, old_y + 240), (x + 320, y + 240)))
                 (old_x, old_y), old_size = (x, y), size
                 self._camera.position = (x_cam + ms_p * camera_velocity, y_cam, z_cam)
                 t += ms_p

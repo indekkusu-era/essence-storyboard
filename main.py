@@ -3,8 +3,11 @@ import numpy as np
 np.random.seed(1547)
 
 from utils.sb import StoryBoard
-from essence.effects.rain import Rain
 from utils.objects import Scale
+
+from essence.effects.rain import Rain
+from essence.effects.stars import StarZoom
+from essence.effects.final_dialog import forever
 
 def wons(start, end):
     snow = Rain('sb/elements/sq.jpg',150,-4*np.pi/3)
@@ -15,8 +18,12 @@ def wons(start, end):
 
 def main():
     s = wons(62944, 92712)
+    zoomin = StarZoom(500)
+    forever_render = forever()
     sb = StoryBoard().from_osb('poly.osb')
     sb.Objects['background'] += s
+    sb.Objects['background'] += forever_render
+    sb.Objects['background'] += zoomin.render(287893, 301512)
     sb.osb('takehirotei vs. HowToPlayLN - Essence (who will upload this idk).osb')
 
 if __name__ == "__main__":

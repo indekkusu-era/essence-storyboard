@@ -65,5 +65,5 @@ class BoundaryCamera(Camera):
         if size == 0:
             return (0,0), 0
         if self.left() <= x <= self.right() and self.lower() <= y <= self.upper():
-            return (x, y), size
+            return (x * size, y * size), size
         return (0,0), 0
