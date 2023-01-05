@@ -17,17 +17,24 @@ def wons(start, end):
         list_objects[i].add_action(Scale(0, start, end, 4.5, 4.5))
     return list_objects
 
-def main():
-    s = wons(62944, 92712)
-    zoomin = StarZoom(500)
+def render(full_sb=True):
+    if full_sb:
+        sb = StoryBoard.from_osb('poly.osb')
+    else:
+        sb = StoryBoard()
+    wons_2023 = wons(62944, 92712)
+    star_zoom = StarZoom(500)
     forever_render = forever()
     orb_rot = OrbRotation(50)
-    sb = StoryBoard().from_osb('poly.osb')
-    sb.Objects['background'] += s
+    sb.Objects['background'] += wons_2023
     sb.Objects['background'] += forever_render
-    sb.Objects['background'] += zoomin.render(287893, 301512)
+    sb.Objects['background'] += star_zoom.render(287893, 301512)
     sb.Objects['background'] += orb_rot.render(301512, 310860, 0.0008, 0.002, 0.003)
-    sb.osb('takehirotei vs. HowToPlayLN - Essence (who will upload this idk).osb')
+    return sb
+
+def main():
+    sb = render(full_sb=False)
+    sb.osb('htpln.osb')
 
 if __name__ == "__main__":
     main()
