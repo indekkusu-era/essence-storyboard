@@ -22,7 +22,7 @@ class StarZoom:
         mat = np.array([[1000, 0, 0], [0, 320, 0], [0, 0, 240]])
         pos = (mat @ objs).T
         # i wanna do fancy splines stuff but that is later lol
-        camera_velocity = 750 / (end - start)
+        camera_velocity = 1000 / (end - start)
         ms_p = 1000 / 24
         sprites = [self._black_cover(start, end)]
         for star in pos:

@@ -11,6 +11,7 @@ from utils.objects import Sprite, Color, Scale, Move, Fade
 class OrbRotation:
     _star = "sb/elements/star.png"
     _white = 'sb/white/white.png'
+    _orb = 'sb/elements/orb.png'
     def __init__(self, expected_generation_time: int):
         self._expected_generation_time = expected_generation_time
         self._camera = BoundaryCamera(boundary=(640, 480))
@@ -66,4 +67,9 @@ class OrbRotation:
                 old_x, old_y, old_size = posx, posy, size
             t += int(next_star_event)
             all_sprites.append(star)
+        orb = Sprite(self._orb)
+        orb.add_action(Scale(2, start, int((start + end) // 2), 0, 0.1))
+        orb.add_action(Scale(0, int(0.875 * end + 0.125 * start), end, 0.1, 2.8))
+        orb.add_action(Fade(0, end, end + 10, 1, 0))
+        all_sprites.append(orb)
         return all_sprites
