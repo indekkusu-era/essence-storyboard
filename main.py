@@ -10,7 +10,7 @@ from essence.effects.stars import StarZoom
 from essence.effects.orb_rotation import OrbRotation
 from essence.effects.bubble import Bubble
 from essence.effects.final_dialog import forever
-from essence.effects.ascension import Ascendance
+from essence.effects.ascension import Ascendance, AscendanceClimax, AscendanceClimax2, AscendanceClimax3
 from essence.effects.uncertainty import Uncertainty
 
 def wons(start, end):
@@ -31,6 +31,8 @@ def render(full_sb=True):
     orb_rot = OrbRotation(50)
     bbl = Bubble(50)
     ascendance = Ascendance()
+    ascendance2 = AscendanceClimax(10, 500, 200, 2500)
+    ascendance3 = AscendanceClimax2('assets/climax2', 272)
     uncertainty = Uncertainty('assets/essence_xi_midi.mid')
     sb.Objects['background'] += wons_2023
     sb.Objects['background'] += forever_render
@@ -39,6 +41,8 @@ def render(full_sb=True):
     sb.Objects['background'] += bbl.render(180304, 198248, 280 * 16)
     sb.Objects['background'] += ascendance.render(217316, 225267, 230721)
     sb.Objects['background'] += uncertainty.render(109652)
+    sb.Objects['background'] += ascendance2.render(236176, 257994)
+    sb.Objects['background'] += ascendance3.render(257994, 271725)
     return sb
 
 def main():

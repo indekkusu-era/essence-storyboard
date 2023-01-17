@@ -2,3 +2,4 @@ sb/*
 */__pycache__/*
 __pycache__/*
 *.osb
+assets/*
