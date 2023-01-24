@@ -12,6 +12,9 @@ from essence.effects.bubble import Bubble
 from essence.effects.final_dialog import forever
 from essence.effects.ascension import Ascendance, AscendanceClimax, AscendanceClimax2, AscendanceClimax3
 from essence.effects.uncertainty import Uncertainty
+from essence.effects.constellation import ConstellationAnimation
+
+from essence.config import speedcore_melody_timestamps, constellation_vertices_timestamps, essence_constellation_edges_pred
 
 def wons(start, end):
     snow = Rain('sb/elements/sq.jpg',150,-4*np.pi/3)
@@ -22,7 +25,7 @@ def wons(start, end):
 
 def render(full_sb=True):
     if full_sb:
-        sb = StoryBoard().from_osb('poly.osb')
+        sb = StoryBoard().from_osb('takehirotei_vs._HowToPlayLN_-_Essence_who_will_upload_this_idk (4).osb')
     else:
         sb = StoryBoard()
     wons_2023 = wons(62944, 92712)
@@ -33,16 +36,17 @@ def render(full_sb=True):
     ascendance = Ascendance()
     ascendance2 = AscendanceClimax(10, 500, 200, 2500)
     ascendance3 = AscendanceClimax2('assets/climax2', 272)
+    ascendance4 = AscendanceClimax3(speedcore_melody_timestamps, 10)
     uncertainty = Uncertainty('assets/essence_xi_midi.mid')
-    sb.Objects['background'] += wons_2023
-    sb.Objects['background'] += forever_render
-    sb.Objects['background'] += star_zoom.render(287893, 301512)
-    sb.Objects['background'] += orb_rot.render(301512, 310860, 0.0008, 0.002, 0.003)
-    sb.Objects['background'] += bbl.render(180304, 198248, 280 * 16)
-    sb.Objects['background'] += ascendance.render(217316, 225267, 230721)
-    sb.Objects['background'] += uncertainty.render(109652)
-    sb.Objects['background'] += ascendance2.render(236176, 257994)
-    sb.Objects['background'] += ascendance3.render(257994, 271725)
+    constellation = ConstellationAnimation(constellation_vertices_timestamps, essence_constellation_edges_pred)
+    new_objects = wons_2023 + forever_render + \
+        orb_rot.render(301512, 310860, 0.0008, 0.002, 0.003) + bbl.render(180304, 198248, 280 * 16) + \
+        ascendance.render(217316, 225267, 230721) + \
+        uncertainty.render(109652) + ascendance2.render(236176, 257994) + \
+        ascendance3.render(257994, 271725) + ascendance4.render() + \
+        star_zoom.render(287893, 301512) + \
+        constellation.render(374399)
+    sb.Objects['background'] = sb.Objects['background'] + new_objects
     return sb
 
 def main():

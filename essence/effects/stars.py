@@ -48,7 +48,3 @@ class StarZoom:
                 t += ms_p
             sprites.append(star_sprite)
         return sprites
-
-                
-            
-            

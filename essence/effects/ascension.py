@@ -1,9 +1,9 @@
 import os
 
-from numpy.random import exponential, uniform
-from numpy import pi
-from utils.objects import Sprite, Move, MoveY, Fade, Scale, Loop, Color, Rotate, VectorScale
-from utils.constants import SB_WIDTH, SB_HEIGHT, SB_LEFT, SB_RIGHT
+from numpy.random import exponential, uniform, randint
+from numpy import pi, cos, sin
+from utils.objects import Sprite, Move, Fade, Scale, Color, Rotate, MoveX, MoveY, Loop
+from utils.constants import SB_WIDTH, SB_HEIGHT, SB_LEFT, SB_RIGHT, SB_LOWER, SB_UPPER
 from utils.midiparser.parser import get_timestamps_and_pitches, get_time_signatures
 
 class Ascendance:
@@ -101,20 +101,6 @@ class AscendanceClimax:
             all_sprites.append(sprite)
             t += random_interarrival
         
-        # Comets
-        t = t_start
-        rotation_axis = - pi / 2
-        while t < t_end:
-            sprite = Sprite(self._comet)
-            random_interarrival = exponential(self.comet_interarrival_time)
-            random_departure = exponential(self.comet_departure_time)
-            random_x = uniform(SB_LEFT, SB_RIGHT)
-            random_scale = exponential(1.2)
-            sprite.add_action(VectorScale(0, t, t + random_departure, (random_scale, 2), (random_scale, 2)))
-            sprite.add_action(Rotate(0, t, t + random_departure, rotation_axis, rotation_axis))
-            sprite.add_action(Move(0, t, t + random_departure, (random_x, -20), (random_x, 500)))
-            all_sprites.append(sprite)
-            t += random_interarrival
         return all_sprites
 
 class AscendanceClimax2:
@@ -188,4 +174,70 @@ class AscendanceClimax2:
             
 
 class AscendanceClimax3:
-    ...
+    _white = 'sb/white/white.png'
+    def __init__(self, timestamps, n_pairs):
+        self.timestamps = timestamps
+        self.n_pairs = n_pairs
+
+    def _black_cover(self, start, end):
+        white = Sprite(self._white)
+        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
+        white.add_action(Scale(0, start, end, 5, 5))
+        return white
+
+    def create_horizontal_helix(self, timestamp, pos_y, radius, initial_x, dest_x, offset):
+        star1 = Sprite("sb/elements/star.png")
+        star2 = Sprite("sb/elements/star.png")
+        star1.add_action(MoveX(0, timestamp + offset, timestamp + offset + 400, initial_x, dest_x))
+        star2.add_action(MoveX(0, timestamp + offset, timestamp + offset + 400, initial_x, dest_x))
+        helix_loop_actions_1 = [
+            MoveY(17, 0, 100, pos_y - radius / 2, pos_y + radius / 2),
+            MoveY(17, 100, 200, pos_y + radius / 2, pos_y - radius / 2)
+        ]
+        helix_loop_actions_2 = [
+            MoveY(17, 0, 100, pos_y + radius / 2, pos_y - radius / 2),
+            MoveY(17, 100, 200, pos_y - radius / 2, pos_y + radius / 2)
+        ]
+        loop1 = Loop(timestamp + offset, 2, helix_loop_actions_1)
+        loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
+        star1.add_action(loop1)
+        star2.add_action(loop2)
+        return [star1, star2]
+
+    def create_vertical_helix(self, timestamp, pos_x, radius, initial_y, dest_y, offset):
+        star1 = Sprite("sb/elements/star.png")
+        star2 = Sprite("sb/elements/star.png")
+        star1.add_action(MoveY(0, timestamp + offset, timestamp + offset + 400, initial_y, dest_y))
+        star2.add_action(MoveY(0, timestamp + offset, timestamp + offset + 400, initial_y, dest_y))
+        helix_loop_actions_1 = [
+            MoveX(17, 0, 100, pos_x - radius / 2, pos_x + radius / 2),
+            MoveX(17, 100, 200, pos_x + radius / 2, pos_x - radius / 2)
+        ]
+        helix_loop_actions_2 = [
+            MoveX(17, 0, 100, pos_x + radius / 2, pos_x - radius / 2),
+            MoveX(17, 100, 200, pos_x - radius / 2, pos_x + radius / 2)
+        ]
+        loop1 = Loop(timestamp + offset, 2, helix_loop_actions_1)
+        loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
+        star1.add_action(loop1)
+        star2.add_action(loop2)
+        return [star1, star2]
+
+    def render(self):
+        all_sprites = [self._black_cover(min(self.timestamps), max(self.timestamps) + 400)]
+        # generate helix for timestamps
+        for timestamp in self.timestamps:
+            pos = uniform(0, 1)
+            rng = uniform(0, 1)
+            for i in range(self.n_pairs):
+                # create sprites for each pair using the new method
+                if rng >= 0.5:
+                    pos_y = pos * 480
+                    horizontal_sprites = self.create_horizontal_helix(timestamp, pos_y, 100, SB_LEFT, SB_RIGHT, i * 20)
+                    all_sprites.extend(horizontal_sprites)
+                else:
+                    pos_x = SB_LEFT + (SB_RIGHT - SB_LEFT) * pos
+                    vertical_sprites = self.create_vertical_helix(timestamp, pos_x, 100, SB_UPPER, SB_LOWER, i*20)
+                    all_sprites.extend(vertical_sprites)
+        return all_sprites
+
