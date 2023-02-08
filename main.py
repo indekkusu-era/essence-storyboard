@@ -6,7 +6,7 @@ from utils.sb import StoryBoard
 from utils.objects import Scale
 
 from essence.effects.rain import Rain
-from essence.effects.stars import StarZoom
+from essence.effects.stars import Plexus3D as StarZoom
 from essence.effects.orb_rotation import OrbRotation
 from essence.effects.bubble import Bubble
 from essence.effects.final_dialog import forever
@@ -45,13 +45,13 @@ def render(full_sb=True):
         uncertainty.render(109652) + ascendance2.render(236176, 257994) + \
         ascendance3.render(257994, 271725) + ascendance4.render() + \
         star_zoom.render(287893, 301512) + \
-        constellation.render(374399)
+        constellation.render(312003)
     sb.Objects['background'] = sb.Objects['background'] + new_objects
     return sb
 
 def main():
     sb = render(full_sb=True)
-    sb.osb('takehirotei vs. HowToPlayLN - Essence (who will upload this idk).osb')
+    sb.osb('takehirotei vs. HowToPlayLN - Essence (4DMWC2023 Team).osb')
 
 if __name__ == "__main__":
     main()

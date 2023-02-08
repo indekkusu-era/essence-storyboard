@@ -19,14 +19,15 @@ class ConstellationAnimation:
 
     @classmethod
     def lines(self, start, end, pos1: Tuple[float], pos2: Tuple[float]):
-        line = Sprite(self._line, 'CentreLeft')
+        line = Sprite(self._line)
         x, y = (pos2[0] - pos1[0], pos2[1] - pos1[1])
         r = np.sqrt(x ** 2 + y ** 2)
         theta = np.arctan(y / x)
         if x < 0:
             theta += np.pi
-        scalex = r / 121
-        line.add_action(Move(0, start, end, pos1, pos1))
+        scalex = r / 100
+        line_pos = ((pos1[0] + pos2[0]) / 2, (pos1[1] + pos2[1]) / 2)
+        line.add_action(Move(0, start, end, line_pos, line_pos))
         line.add_action(VectorScale(0, start, end, (scalex, 1), (scalex, 1)))
         line.add_action(Rotate(0, start, end, theta, theta))
         line.add_action(Fade(0, end, end+1, 1, 0))

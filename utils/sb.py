@@ -32,6 +32,13 @@ class StoryBoard:
         self.FAILPASS_TEXT + self.FOREGROUND_TEXT + "".join([i.render(Position.FOREGROUND) for i in self.Objects['foreground']]) + \
         self.OVERLAY_TEXT + "".join([i.render(Position.OVERLAY) for i in self.Objects['overlay']])
         return text + self.SOUND_SAMPLES
+    
+    def get_elements_by_id(self, _id):
+        """Returns the indices of the elements with the specified ID"""
+        ids = {}
+        for layer in self.Objects.keys():
+            ids[layer] = list(filter(lambda x: self.Objects[layer][x]._id == _id, range(len(self.Objects[layer]))))
+        return ids
 
     @staticmethod
     def is_sprite(text):

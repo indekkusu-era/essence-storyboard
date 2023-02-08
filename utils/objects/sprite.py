@@ -11,9 +11,10 @@ class Position(Enum):
     OVERLAY = 2
 
 class Sprite:
-    def __init__(self, file_name, align='Centre'):
+    def __init__(self, file_name, align='Centre', id=None):
         self.filename = file_name
         self.align = align
+        self._id = id
         self.action = []
     
     def from_image(self, image_content: Image):

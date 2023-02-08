@@ -92,8 +92,10 @@ def glitch_crop(im: Image, n_portions: int):
 
 def crop_edge(im: Image):
     alp = np.array(im)[:, :, 1].T
-    vert_edge = np.where(np.sum(alp, axis=1) != 0)[0]
-    horiz_edge = np.where(np.sum(alp.T, axis=1) != 0)[0]
+    horiz_edge = np.sort(np.where(np.sum(alp, axis=1) != 0)[0])
+    vert_edge = np.sort(np.where(np.sum(alp.T, axis=1) != 0)[0])
     
     im = im.crop((horiz_edge[0], vert_edge[0], horiz_edge[-1], vert_edge[-1]))
     return im
+
+crop_edge(Image.open('sb/elements/line.png')).save('sb/elements/line_crop.png')
