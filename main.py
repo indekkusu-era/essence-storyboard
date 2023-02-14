@@ -3,18 +3,20 @@ import numpy as np
 np.random.seed(1547)
 
 from utils.sb import StoryBoard
-from utils.objects import Scale
+from utils.objects import Scale, Sprite, Color
 
 from essence.effects.rain import Rain
-from essence.effects.stars import Plexus3D as StarZoom
+from essence.effects.stars import StarZoom
 from essence.effects.orb_rotation import OrbRotation
 from essence.effects.bubble import Bubble
 from essence.effects.final_dialog import forever
-from essence.effects.ascension import Ascendance, AscendanceClimax, AscendanceClimax2, AscendanceClimax3
+from essence.effects.ascension import Ascendance, AscendanceBuildUp, AscendanceClimax, AscendanceClimax2, AscendanceClimax3
 from essence.effects.uncertainty import Uncertainty
 from essence.effects.constellation import ConstellationAnimation
+from essence.effects.true_essence import true_essence
+from essence.effects.mapper_names import essence_mappers
 
-from essence.config import speedcore_melody_timestamps, constellation_vertices_timestamps, essence_constellation_edges_pred
+from essence.config import speedcore_melody_timestamps, constellation_vertices_timestamps, essence_constellation_edges_pred, ascendance_appear, ascendance_disappear
 
 def wons(start, end):
     snow = Rain('sb/elements/sq.jpg',150,-4*np.pi/3)
@@ -23,9 +25,15 @@ def wons(start, end):
         list_objects[i].add_action(Scale(0, start, end, 4.5, 4.5))
     return list_objects
 
+def black_cover(start, end):
+    white = Sprite('sb/backgrounds/white.png')
+    white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
+    white.add_action(Scale(0, start, end, 5, 5))
+    return [white]
+
 def render(full_sb=True):
     if full_sb:
-        sb = StoryBoard().from_osb('takehirotei_vs._HowToPlayLN_-_Essence_who_will_upload_this_idk (4).osb')
+        sb = StoryBoard().from_osb('poly1.osb')
     else:
         sb = StoryBoard()
     wons_2023 = wons(62944, 92712)
@@ -34,19 +42,22 @@ def render(full_sb=True):
     orb_rot = OrbRotation(50)
     bbl = Bubble(50)
     ascendance = Ascendance()
+    ascendancebuildup = AscendanceBuildUp(10, ascendance_appear, ascendance_disappear)
     ascendance2 = AscendanceClimax(10, 500, 200, 2500)
     ascendance3 = AscendanceClimax2('assets/climax2', 272)
     ascendance4 = AscendanceClimax3(speedcore_melody_timestamps, 10)
     uncertainty = Uncertainty('assets/essence_xi_midi.mid')
     constellation = ConstellationAnimation(constellation_vertices_timestamps, essence_constellation_edges_pred)
-    new_objects = wons_2023 + forever_render + \
+    new_objects = wons_2023 + black_cover(217173, 383020) + \
         orb_rot.render(301512, 310860, 0.0008, 0.002, 0.003) + bbl.render(180304, 198248, 280 * 16) + \
-        ascendance.render(217316, 225267, 230721) + \
+        ascendance.render(217316, 225267, 230721) + ascendancebuildup.render() + \
         uncertainty.render(109652) + ascendance2.render(236176, 257994) + \
         ascendance3.render(257994, 271725) + ascendance4.render() + \
         star_zoom.render(287893, 301512) + \
-        constellation.render(312003)
+        constellation.render(312003) + \
+        true_essence()
     sb.Objects['background'] = sb.Objects['background'] + new_objects
+    sb.Objects['foreground'] = sb.Objects['foreground'] + essence_mappers()
     return sb
 
 def main():

@@ -60,8 +60,8 @@ class OrbRotation:
                     old_x, old_y, old_size = posx, posy, size
                     t0 += ms_per_frame
                     t0 = int(t0)
-                star.add_action(Scale(0, t0, int(t0 + ms_per_frame), old_size, size))
-                star.add_action(Move(0, t0, int(t0 + ms_per_frame), (old_x + 320, old_y + 240), (posx + 320, posy + 240)))
+                star.add_action(Scale(0, t0, min(int(t0 + ms_per_frame), end), old_size, size))
+                star.add_action(Move(0, t0, min(int(t0 + ms_per_frame), end), (old_x + 320, old_y + 240), (posx + 320, posy + 240)))
                 t0 += ms_per_frame
                 t0 = int(t0)
                 old_x, old_y, old_size = posx, posy, size
@@ -70,6 +70,6 @@ class OrbRotation:
         orb = Sprite(self._orb)
         orb.add_action(Scale(2, start, int((start + end) // 2), 0, 0.1))
         orb.add_action(Scale(0, int(0.875 * end + 0.125 * start), end, 0.1, 2.8))
-        orb.add_action(Fade(0, end, end + 10, 1, 0))
+        orb.add_action(Fade(0, end, end+10, 1, 0))
         all_sprites.append(orb)
         return all_sprites

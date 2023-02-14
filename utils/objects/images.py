@@ -98,4 +98,4 @@ def crop_edge(im: Image):
     im = im.crop((horiz_edge[0], vert_edge[0], horiz_edge[-1], vert_edge[-1]))
     return im
 
-crop_edge(Image.open('sb/elements/line.png')).save('sb/elements/line_crop.png')
+gradient((255, 255, 255)).save('something.png')

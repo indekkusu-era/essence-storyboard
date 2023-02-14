@@ -12,20 +12,14 @@ class StarZoom:
         self._n_stars = n_stars
         self._camera = BoundaryCamera(boundary=(640, 480))
     
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
-    
     def render(self, start, end):
         objs = uniform(-1, 1, (3, self._n_stars))
         mat = np.array([[1000, 0, 0], [0, 320, 0], [0, 0, 240]])
         pos = (mat @ objs).T
         # i wanna do fancy splines stuff but that is later lol
         camera_velocity = 1000 / (end - start)
-        ms_p = 1000 / 24
-        sprites = [self._black_cover(start, end)]
+        ms_p = 1000 / 12
+        sprites = []
         for star in pos:
             t = start
             self._camera.position = (0,0,0)
@@ -59,20 +53,14 @@ class Plexus3D:
         self._n_stars = n_stars
         self._camera = BoundaryCamera(boundary=(640, 480))
     
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
-    
     def render(self, start, end):
         objs = uniform(-1, 1, (3, self._n_stars))
-        mat = np.array([[1000, 0, 0], [0, 320, 0], [0, 0, 240]])
+        mat = np.array([[2000, 0, 0], [0, 320, 0], [0, 0, 240]])
         pos = (mat @ objs).T
         # i wanna do fancy splines stuff but that is later lol
-        camera_velocity = 1000 / (end - start)
-        ms_p = 1000 / 24
-        sprites = [self._black_cover(start, end)]
+        camera_velocity = 2000 / (end - start)
+        ms_p = 1000 / 12
+        sprites = []
         for star in pos:
             t = start
             self._camera.position = (0,0,0)
@@ -97,7 +85,7 @@ class Plexus3D:
                 size *= camera_velocity * (end - start) / 8
                 star_sprite.add_action(Scale(0, t, t+ms_p, old_size, size))
                 star_sprite.add_action(Move(0, t, t+ms_p, (old_x + 320, old_y + 240), (x + 320, y + 240)))
-                if size_nn == 0:
+                if size_nn == 0 or t == start:
                     (old_x, old_y), old_size = (x, y), size
                     (old_x_nn, old_y_nn) = (x_nn, y_nn)
                     self._camera.position = (x_cam + ms_p * camera_velocity, y_cam, z_cam)
@@ -115,6 +103,11 @@ class Plexus3D:
                     old_theta += np.pi
                 if (x_nn - x) < 0:
                     theta += np.pi
+                while abs(old_theta - theta) > np.pi / 3:
+                    if theta < old_theta:
+                        theta += np.pi / 2
+                    else:
+                        theta -= np.pi / 2
                 old_line_pos = ((old_x + old_x_nn) / 2 + 320, (old_y + old_y_nn) / 2 + 240)
                 line_pos = ((x + x_nn) / 2 + 320, (y + y_nn) / 2 + 240)
                 constellation_line.add_action(Move(0, t, t+ms_p, old_line_pos, line_pos))

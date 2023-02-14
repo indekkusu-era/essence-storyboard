@@ -65,3 +65,32 @@ constellation_vertices_timestamps = {}
 
 for pos, order in zip(constellation_positions, essence_constellation_order):
     constellation_vertices_timestamps[pos] = constellation_initial_timestamps + (constellation_endpoint_timestamps - constellation_initial_timestamps) * ((order - 1) / len(essence_constellation_order))
+
+ascendance_appear = [230721, 230835, 231062, 231176, 231403, 231517, 231744, 231857, 232085, 232198, 232426, 232767, 232880, 233107, 233221, 233448]
+ascendance_disappear = [234812, 235039, 235267, 235494]
+
+mapper_names = {
+    1547: "",
+    40931: "",
+    62944: "FelixSpade",
+    77828: "doctormango",
+    92712: "",
+    109652: "MyZterioN-",
+    132081: "FelixSpade",
+    163482: "",
+    180304: "",
+    217313: "",
+    236176: "doctormango",
+    257994: "HowToPlayLN",
+    271725: "TheFunk",
+    287895: "",
+    311936: "elexire",
+    320470: "Mikuaimbot",
+    328782: "ERA Leon",
+    336781: "BilliumMoto",
+    344340: "Beatmap",
+    351558: "RuleBlazing",
+    358565: "Stability",
+    365257: "DannyPX",
+    383877: "HowToPlayLN _ takehirotei"
+}

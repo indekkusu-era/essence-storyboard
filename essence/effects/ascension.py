@@ -1,6 +1,6 @@
 import os
 
-from numpy.random import exponential, uniform, randint
+from numpy.random import exponential, uniform, choice
 from numpy import pi, cos, sin
 from utils.objects import Sprite, Move, Fade, Scale, Color, Rotate, MoveX, MoveY, Loop
 from utils.constants import SB_WIDTH, SB_HEIGHT, SB_LEFT, SB_RIGHT, SB_LOWER, SB_UPPER
@@ -12,12 +12,6 @@ class Ascendance:
     def __init__(self, expected_interarrival_time=200, expected_service_time=198):
         self._expected_interarrival_time = expected_interarrival_time
         self._expected_service_time = expected_service_time
-
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
     
     def random_interarrival(self):
         return exponential(self._expected_interarrival_time)
@@ -38,7 +32,7 @@ class Ascendance:
         ]
 
     def render(self, start, zoom_up, end):
-        all_sprites = [self._black_cover(start, end)]
+        all_sprites = []
         t = start
         last_departure = t
         while t < zoom_up:
@@ -70,6 +64,28 @@ class Ascendance:
             t = interarrival_time
         
         return all_sprites
+    
+class AscendanceBuildUp:
+    def __init__(self, n_star_per_generate: int, generating_timestamps: list[int], disappear_timestamps: list[int]):
+        self.n_star_per_generate = n_star_per_generate
+        self.generating_timestamps = generating_timestamps
+        self.disappear_timestamps = disappear_timestamps
+    
+    def render(self):
+        all_sprites = []
+        for ts in self.generating_timestamps:
+            for _ in range(self.n_star_per_generate):
+                star = Sprite('sb/elements/star.png')
+                x = uniform(SB_LEFT, SB_RIGHT)
+                y = uniform(SB_UPPER, SB_LOWER)
+                end = choice(self.disappear_timestamps)
+                star.add_actions([
+                    Scale(0, ts, end, 1.8, 1.8),
+                    Move(0, ts, end, (x, y), (x, y)),
+                    Scale(0, end, end + 1, 1.8, 0)
+                ])
+                all_sprites.append(star)
+        return all_sprites
 
 class AscendanceClimax:
     _star = "sb/elements/star.png"
@@ -80,15 +96,9 @@ class AscendanceClimax:
         self.comet_interarrival_time = comet_interarrival_time
         self.comet_departure_time = comet_departure_time
         self.star_time = star_time
-
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
     
     def render(self, t_start, t_end):
-        all_sprites = [self._black_cover(t_start, t_end)]
+        all_sprites = []
         # Stars
         t = t_start
         while t < t_end:
@@ -109,12 +119,6 @@ class AscendanceClimax2:
     def __init__(self, midi_dir, bpm=None):
         self.midi_dir = midi_dir
         self.bpm = bpm
-
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
 
     def get_time_signatures(self, midifp, t_end):
         time_signatures = get_time_signatures(midifp, self.bpm)
@@ -150,7 +154,7 @@ class AscendanceClimax2:
         return time_signatures, (timestamps, pitches)
 
     def render(self, t_start, t_end):
-        all_sprites = [self._black_cover(t_start, t_end)]
+        all_sprites = []
         time_signatures, (timestamps, pitches) = self.get_all_tracks_data(t_end - t_start)
         time_signature_changes = list(time_signatures.keys())
         bar_reset = time_signature_changes[::2] + [t_end - t_start]
@@ -179,52 +183,49 @@ class AscendanceClimax3:
         self.timestamps = timestamps
         self.n_pairs = n_pairs
 
-    def _black_cover(self, start, end):
-        white = Sprite(self._white)
-        white.add_action(Color(0, start, end, (0,0,0), (0,0,0)))
-        white.add_action(Scale(0, start, end, 5, 5))
-        return white
-
     def create_horizontal_helix(self, timestamp, pos_y, radius, initial_x, dest_x, offset):
         star1 = Sprite("sb/elements/star.png")
-        star2 = Sprite("sb/elements/star.png")
+        # star2 = Sprite("sb/elements/star.png")
         star1.add_action(MoveX(0, timestamp + offset, timestamp + offset + 400, initial_x, dest_x))
-        star2.add_action(MoveX(0, timestamp + offset, timestamp + offset + 400, initial_x, dest_x))
+        # star2.add_action(MoveX(0, timestamp + offset, timestamp + offset + 400, initial_x, dest_x))
         helix_loop_actions_1 = [
             MoveY(17, 0, 100, pos_y - radius / 2, pos_y + radius / 2),
             MoveY(17, 100, 200, pos_y + radius / 2, pos_y - radius / 2)
         ]
-        helix_loop_actions_2 = [
-            MoveY(17, 0, 100, pos_y + radius / 2, pos_y - radius / 2),
-            MoveY(17, 100, 200, pos_y - radius / 2, pos_y + radius / 2)
-        ]
+        # helix_loop_actions_2 = [
+        #     MoveY(17, 0, 100, pos_y + radius / 2, pos_y - radius / 2),
+        #     MoveY(17, 100, 200, pos_y - radius / 2, pos_y + radius / 2)
+        # ]
         loop1 = Loop(timestamp + offset, 2, helix_loop_actions_1)
-        loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
+        # loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
         star1.add_action(loop1)
-        star2.add_action(loop2)
-        return [star1, star2]
+        # star2.add_action(loop2)
+        return [star1]
 
     def create_vertical_helix(self, timestamp, pos_x, radius, initial_y, dest_y, offset):
         star1 = Sprite("sb/elements/star.png")
-        star2 = Sprite("sb/elements/star.png")
+        # star2 = Sprite("sb/elements/star.png")
         star1.add_action(MoveY(0, timestamp + offset, timestamp + offset + 400, initial_y, dest_y))
-        star2.add_action(MoveY(0, timestamp + offset, timestamp + offset + 400, initial_y, dest_y))
+        # star2.add_action(MoveY(0, timestamp + offset, timestamp + offset + 400, initial_y, dest_y))
         helix_loop_actions_1 = [
             MoveX(17, 0, 100, pos_x - radius / 2, pos_x + radius / 2),
             MoveX(17, 100, 200, pos_x + radius / 2, pos_x - radius / 2)
         ]
-        helix_loop_actions_2 = [
-            MoveX(17, 0, 100, pos_x + radius / 2, pos_x - radius / 2),
-            MoveX(17, 100, 200, pos_x - radius / 2, pos_x + radius / 2)
-        ]
+        # helix_loop_actions_2 = [
+        #     MoveX(17, 0, 100, pos_x + radius / 2, pos_x - radius / 2),
+        #     MoveX(17, 100, 200, pos_x - radius / 2, pos_x + radius / 2)
+        # ]
         loop1 = Loop(timestamp + offset, 2, helix_loop_actions_1)
-        loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
+        # loop2 = Loop(timestamp + offset, 2, helix_loop_actions_2)
         star1.add_action(loop1)
-        star2.add_action(loop2)
-        return [star1, star2]
+        # star2.add_action(loop2)
+        return [star1]
 
     def render(self):
-        all_sprites = [self._black_cover(min(self.timestamps), max(self.timestamps) + 400)]
+        all_sprites = []
+        # create ascendance
+        ascendance_bg = AscendanceClimax(50, 0, 400, 0)
+        all_sprites += ascendance_bg.render(min(self.timestamps), max(self.timestamps))
         # generate helix for timestamps
         for timestamp in self.timestamps:
             pos = uniform(0, 1)
