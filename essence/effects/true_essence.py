@@ -2,7 +2,7 @@ import numpy as np
 from typing import Dict, Tuple
 from copy import deepcopy
 
-from numpy.random import exponential, uniform, randint
+from numpy.random import exponential, uniform, choice
 from utils.objects import Sprite, Move, Fade, VectorScale, Scale, Color, Rotate, MoveX, MoveY, Loop
 from utils.constants import SB_WIDTH, SB_HEIGHT, SB_LEFT, SB_RIGHT, SB_LOWER, SB_UPPER
 from utils.midiparser.parser import get_timestamps_and_pitches, get_time_signatures
@@ -49,7 +49,15 @@ def true_essence_1(start, fade_out_start, end):
                     constellation_render[i].add_actions([
                         VectorScale(0, fade_out_start, end, (vector_x, vector_y), (0,0))
                     ])
-    return constellation_render
+    stars = []
+    for _ in range(40):
+        star = Sprite('sb/elements/star.png')
+        x = uniform(SB_LEFT, SB_RIGHT)
+        y = choice([uniform(0, 0.3), uniform(0.7, 1)]) * SB_LOWER
+        star.add_action(Move(0, start, end, (x, y), (x, y)))
+        star.add_action(Scale(0, start, end, 1, 1))
+        stars.append(star)
+    return stars + constellation_render
 
 def true_essence_2(start, midi_file):
     hexagon = 'sb/elements/hexagon.png'
@@ -88,7 +96,7 @@ def true_essence_5(start, plexus_appear, end):
             continue
         if len(plexus[i].action) == 0:
             continue
-        if max(vectorscale_actions, key=lambda x: x.end_time).end_time < (plexus_appear + end) / 2:
+        if max(vectorscale_actions, key=lambda x: x.end_time).end_time < plexus_appear + 2000:
             continue
         filtered_plexus.append(plexus[i])
         filtered_plexus[-1].add_action(Fade(0, plexus_appear, plexus_appear + 2000, 0, 1))
