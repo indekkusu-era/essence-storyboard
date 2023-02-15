@@ -10,6 +10,7 @@ from essence.config import constellation_vertices_timestamps, essence_constellat
 from .uncertainty import Uncertainty
 from .stars import Plexus3D
 from .orb_rotation import OrbRotation
+from .bubble import Bubble
 
 from .constellation import ConstellationAnimation
 
@@ -49,15 +50,10 @@ def true_essence_1(start, fade_out_start, end):
                     constellation_render[i].add_actions([
                         VectorScale(0, fade_out_start, end, (vector_x, vector_y), (0,0))
                     ])
-    stars = []
-    for _ in range(40):
-        star = Sprite('sb/elements/star.png')
-        x = uniform(SB_LEFT, SB_RIGHT)
-        y = choice([uniform(0, 0.3), uniform(0.7, 1)]) * SB_LOWER
-        star.add_action(Move(0, start, end, (x, y), (x, y)))
-        star.add_action(Scale(0, start, end, 1, 1))
-        stars.append(star)
-    return stars + constellation_render
+    bubbles = Bubble(50).render(start, end, 4500)
+    black = Sprite("sb/backgrounds/black.png")
+    black.add_action(Fade(0, start, end, 0.4, 0.4))
+    return bubbles + [black] + constellation_render
 
 def true_essence_2(start, midi_file):
     hexagon = 'sb/elements/hexagon.png'

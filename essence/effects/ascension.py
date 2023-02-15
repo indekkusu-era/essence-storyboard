@@ -58,7 +58,10 @@ class Ascendance:
             random_x = uniform(SB_LEFT, SB_RIGHT)
             interarrival_time = int(t + exponential((1 - (t - start) / (end - start)) * 40 + 10))
             interval = (10 - 8 * (t - start) / (end - start)) * 200
-            sprite.add_action(Scale(0, t, t + interval, 1, 1))
+            if t > zoom_up:
+                interval //= 2
+            star_size = 2 if t > zoom_up else 1
+            sprite.add_action(Scale(0, t, t + interval, star_size, star_size))
             sprite.add_action(Move(0, t, t + interval, (random_x, -20), (random_x, 500)))
             all_sprites.append(sprite)
             t = interarrival_time
