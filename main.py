@@ -9,7 +9,7 @@ from essence.effects.rain import Rain
 from essence.effects.stars import StarZoom
 from essence.effects.orb_rotation import OrbRotation
 from essence.effects.bubble import Bubble
-from essence.effects.final_dialog import forever
+from essence.effects.meteor import Meteor
 from essence.effects.ascension import Ascendance, AscendanceBuildUp, AscendanceClimax, AscendanceClimax2, AscendanceClimax3
 from essence.effects.uncertainty import Uncertainty
 from essence.effects.constellation import ConstellationAnimation
@@ -38,7 +38,6 @@ def render(full_sb=True):
         sb = StoryBoard()
     wons_2023 = wons(62944, 92712)
     star_zoom = StarZoom(500)
-    forever_render = forever()
     orb_rot = OrbRotation(50)
     bbl = Bubble(50)
     ascendance = Ascendance(100, 98)
@@ -47,6 +46,7 @@ def render(full_sb=True):
     ascendance3 = AscendanceClimax2('assets/climax2', 272)
     ascendance4 = AscendanceClimax3(speedcore_melody_timestamps, 10)
     uncertainty = Uncertainty('assets/essence_xi_midi.mid')
+    meteor = Meteor(1000, 5000)
     constellation = ConstellationAnimation(constellation_vertices_timestamps, essence_constellation_edges_pred)
     new_objects = wons_2023 + black_cover(217173, 383020) + \
         orb_rot.render(301512, 310860, 0.0008, 0.002, 0.003) + bbl.render(180304, 198248, 280 * 16) + \
@@ -55,7 +55,7 @@ def render(full_sb=True):
         ascendance3.render(257994, 271725) + ascendance4.render() + \
         star_zoom.render(287893, 301512) + \
         constellation.render(312003) + \
-        true_essence()
+        true_essence() + meteor.render(383877, 433395)
     sb.Objects['background'] = sb.Objects['background'] + new_objects
     sb.Objects['foreground'] = sb.Objects['foreground'] + essence_mappers()
     return sb

@@ -97,5 +97,3 @@ def crop_edge(im: Image):
     
     im = im.crop((horiz_edge[0], vert_edge[0], horiz_edge[-1], vert_edge[-1]))
     return im
-
-gradient((255, 255, 255)).save('something.png')
